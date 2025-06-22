@@ -1,0 +1,17 @@
+# Node modules and dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Local environment files
+.env
+firebase-key.json
+
+# WhatsApp session storage (if using LocalAuth)
+.wwebjs_auth/
+.wwebjs_auth/**/*
+
+# VS Code and OS files
+.vscode/
+.DS_Store
+Thumbs.db
