@@ -1,9 +1,13 @@
 const fs = require("fs");
+require("dotenv").config(); // Optional, for local .env use
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const admin = require("firebase-admin");
+const chromium = require("chrome-aws-lambda");
 
-const serviceAccount = require("./firebase-key.json");
+
+//const serviceAccount = require("./firebase-key.json");
+const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -12,9 +16,11 @@ admin.initializeApp({
 const db = admin.firestore();
 const client = new Client({
   authStrategy: new LocalAuth(), // Stores session to .wwebjs_auth
-  puppeteer: {
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+   puppeteer: {
+    executablePath: async () =>
+      await chromium.executablePath || '/usr/bin/chromium-browser',
+    args: chromium.args,
+    headless: chromium.headless,
   },
 });
 
