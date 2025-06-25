@@ -3,8 +3,7 @@ require("dotenv").config(); // Optional, for local .env use
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const admin = require("firebase-admin");
-const chromium = require("chrome-aws-lambda");
-
+// const chromium = require("chrome-aws-lambda");
 
 //const serviceAccount = require("./firebase-key.json");
 const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
@@ -16,11 +15,8 @@ admin.initializeApp({
 const db = admin.firestore();
 const client = new Client({
   authStrategy: new LocalAuth(), // Stores session to .wwebjs_auth
-   puppeteer: {
-    executablePath: async () =>
-      await chromium.executablePath || '/usr/bin/chromium-browser',
-    args: chromium.args,
-    headless: chromium.headless,
+  puppeteer: {
+    headless: true, // or false if you want to see the browser
   },
 });
 
@@ -92,10 +88,12 @@ async function sendBirthdayWishes() {
     console.log("📋 Loaded users:", users.length);
 
     for (const user of users) {
+      console.log(user);
       if (user.dob === mmdd) {
         const chatId = `${user.number}@c.us`;
+        console.log(chatId);
         const message = `🎉 Happy Birthday, ${user.name}!  Hope you have a great year ahead!🥳`;
-
+        console.log(message);
         console.log(`📤 Sending to ${user.name} (${chatId})`);
         await client.sendMessage(chatId, message);
         console.log(`✅ Sent to ${user.name}`);
