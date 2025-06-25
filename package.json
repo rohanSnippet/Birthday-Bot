@@ -3,11 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
    "start":"node index.js"
-=======
-    "start": "node index.js"
->>>>>>> cf97946 (third commit)
   },
   "keywords": [],
   "author": "",
