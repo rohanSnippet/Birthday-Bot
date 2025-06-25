@@ -3,7 +3,6 @@ require("dotenv").config(); // Optional, for local .env use
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const admin = require("firebase-admin");
-// const chromium = require("chrome-aws-lambda");
 
 //const serviceAccount = require("./firebase-key.json");
 const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
